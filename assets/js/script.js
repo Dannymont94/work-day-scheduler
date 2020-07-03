@@ -11,7 +11,7 @@ function auditCurrentDay() {
     var dayOfMonth = moment().format("D");
 
     // check if date has changed
-    if ($("#currentDay").data("day") !== dayOfMonth) {
+    if ($("#currentDay").data("day") != dayOfMonth) {
         // clear all timeblocks
         $(".description").each(function(){
           $(this).text("");
@@ -28,36 +28,41 @@ function auditTasks() {
     var currentHour = moment().format("H");
 
     // loop through each .description div and apply correct styling depending on currentHour
-    $(".description").each(function(){
+    $(".task").each(function(){
         var dataHour = $(this).data("hour");
 
         // if time block is in the past
         if (currentHour > dataHour) { 
-            $(this).closest("div").removeClass("present");
-            $(this).closest("div").addClass("past");
+            $(this).removeClass("present");
+            $(this).addClass("past");
         }
         // if time block is current
         else if (currentHour == dataHour) {
-            $(this).closest("div").removeClass("future");
-            $(this).closest("div").addClass("present");
+            $(this).removeClass("future");
+            $(this).addClass("present");
         }
         // if time block is in the future
         else  {
-            $(this).closest("div").addClass("future");
+            $(this).addClass("future");
         }
     });
-    console.log("tasks audited");
 }
 
-// Click on a time block to edit and enter an event (replace element with input)
+// Click on a task to create/edit an event (replace .description with input)
 $("#timeblocks").on("click", ".task", function(){
-    var task = $(this).children(".description").text().trim();
-    var textInput = $("<textarea>").val(task);
+    var description = $(this).children(".description").text().trim();
+    var textInput = $("<textarea>").val(description);
     $(this).children(".description").replaceWith(textInput);
     textInput.trigger("focus");
 });
 
-// replace text input with div Save task in localStorage when clicking the save button for that time block (savebtn onclick setItem)
+// click on a save button to replace text input with p.description and save description in localStorage
+$("#timeblocks").on("click", ".saveBtn", function() {
+    var description = $(this).siblings(".task").find("textarea").val();
+    console.log(description);
+    var taskP = $("<p>").addClass("description").text(description);
+    $(this).siblings(".task").find("textarea").replaceWith(taskP);
+});
 
 // load tasks from localStorage when page refreshes (getItem)
 
