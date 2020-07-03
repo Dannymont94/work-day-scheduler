@@ -50,10 +50,10 @@ function auditTasks() {
 }
 
 // Click on a time block to edit and enter an event (replace element with input)
-$("#timeblocks").on("click", ".description", function(){
-    var task = $(this).text().trim();
+$("#timeblocks").on("click", ".task", function(){
+    var task = $(this).children(".description").text().trim();
     var textInput = $("<textarea>").val(task);
-    $(this).replaceWith(textInput);
+    $(this).children(".description").replaceWith(textInput);
     textInput.trigger("focus");
 });
 
