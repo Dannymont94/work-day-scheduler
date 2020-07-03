@@ -5,6 +5,26 @@ $("#currentDay").text(currentDay);
 // perform above function automatically every 6 hours to keep #currentDay accurate 
 
 // Time blocks are color-coded to indicate whether task is in the past, present, or future (audit tasks). 
+function auditTasks() {
+    // get current hour
+    var currentHour = moment().format("H");
+
+    // loop through each .description div and apply correct styling depending on currentHour
+    $(".description").each(function(){
+        var dataHour = $(this).data("hour");
+
+        // if hour block is in the past
+        if (currentHour > dataHour) {
+            $(this).addClass("past");
+        }
+        else if (currentHour == dataHour) {
+            $(this).addClass("present");
+        }
+        else  {
+            $(this).addClass("future");
+        }
+    });
+}
 
 // Create timer function that reaudits tasks every 30 minutes
 
