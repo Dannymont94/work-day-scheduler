@@ -1,4 +1,6 @@
 // Display today's date in #currentDay (moment() with format for day of the week, month, day, and year)
+var currentDay = moment().format("dddd, MMMM Do, YYYY");
+$("#currentDay").text(currentDay);
 
 // perform above function automatically every 6 hours to keep #currentDay accurate 
 
@@ -9,3 +11,5 @@
 // Click on a time block to edit and enter an event (replace element with input)
 
 // Save task in localStorage when clicking the save button for that time block (save onclick setItem)
+
+auditTasks();
