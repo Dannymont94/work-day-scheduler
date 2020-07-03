@@ -22,7 +22,6 @@ function auditCurrentDay() {
     }
 }
 
-
 // Time blocks are color-coded to indicate whether task is in the past, present, or future (audit tasks). 
 function auditTasks() {
     // get current hour
@@ -33,21 +32,30 @@ function auditTasks() {
         var dataHour = $(this).data("hour");
 
         // if time block is in the past
-        if (currentHour > dataHour) {
-            $(this).addClass("past");
+        if (currentHour > dataHour) { 
+            $(this).closest("div").removeClass("present");
+            $(this).closest("div").addClass("past");
         }
         // if time block is current
         else if (currentHour == dataHour) {
-            $(this).addClass("present");
+            $(this).closest("div").removeClass("future");
+            $(this).closest("div").addClass("present");
         }
         // if time block is in the future
         else  {
-            $(this).addClass("future");
+            $(this).closest("div").addClass("future");
         }
     });
+    console.log("tasks audited");
 }
 
 // Click on a time block to edit and enter an event (replace element with input)
+$("#timeblocks").on("click", ".description", function(){
+    var task = $(this).text().trim();
+    var textInput = $("<textarea>").val(task);
+    $(this).replaceWith(textInput);
+    textInput.trigger("focus");
+});
 
 // replace text input with div Save task in localStorage when clicking the save button for that time block (savebtn onclick setItem)
 
