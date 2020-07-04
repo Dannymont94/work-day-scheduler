@@ -1,3 +1,8 @@
+// load tasks from local storage or create empty objects
+function loadTasks() {
+
+}
+
 // Display today's date in #currentDay (moment() with format for day of the week, month, day, and year)
 function renderCurrentDay() {
     var currentDay = moment().format("dddd, MMMM Do, YYYY");
@@ -16,9 +21,12 @@ function auditCurrentDay() {
         $(".description").each(function(){
           $(this).text("");
         });
-
+        
         // render new date
         renderCurrentDay();
+
+        // save cleared list
+        saveAllTasks();
     }
 }
 
@@ -48,7 +56,7 @@ function auditTasks() {
     });
 }
 
-// Click on a task to create/edit an event (replace .description with input)
+// click on a task to create/edit a task (replace p.description with textarea)
 $("#timeblocks").on("click", ".task", function(){
     var description = $(this).children(".description").text().trim();
     var textInput = $("<textarea>").val(description);
@@ -56,15 +64,33 @@ $("#timeblocks").on("click", ".task", function(){
     textInput.trigger("focus");
 });
 
-// click on a save button to replace text input with p.description and save description in localStorage
+// click on a save button to replace textarea with p.description and save description in localStorage
 $("#timeblocks").on("click", ".saveBtn", function() {
     var description = $(this).siblings(".task").find("textarea").val();
-    console.log(description);
     var taskP = $("<p>").addClass("description").text(description);
     $(this).siblings(".task").find("textarea").replaceWith(taskP);
+    saveTask($(this).siblings(".task"));
 });
 
-// load tasks from localStorage when page refreshes (getItem)
+// save tasks under unique key to local storage every time a timeblock is created/edited
+function saveTask(task) {
+    var key = "hour-" + $(task).data("hour");
+    var description = $(task).find(".description").text();
+    localStorage.setItem(key, description);
+}
+
+function saveAllTasks() {
+    console.log("saving all");
+}
+
+
+
+
+
+
+
+
+
 
 
 renderCurrentDay();
