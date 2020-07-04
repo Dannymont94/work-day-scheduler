@@ -1,6 +1,12 @@
 // load tasks from local storage or create empty objects
 function loadTasks() {
-
+    $(".task").each(function(){
+        var dataHour = $(this).data("hour");
+        var key = "hour-" + $(this).data("hour");
+        console.log(key , dataHour);
+        console.log(localStorage.getItem(key));
+        $(this).find(".description").text(localStorage.getItem(key));
+    });
 }
 
 // Display today's date in #currentDay (moment() with format for day of the week, month, day, and year)
@@ -83,17 +89,8 @@ function saveAllTasks() {
     console.log("saving all");
 }
 
-
-
-
-
-
-
-
-
-
-
 renderCurrentDay();
+loadTasks();
 auditTasks();
 
 // audit date and tasks every minute
