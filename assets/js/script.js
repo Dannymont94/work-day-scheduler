@@ -9,8 +9,7 @@ function loadTasks() {
 // Display today's date in #currentDay (moment() with format for day of the week, month, day, and year)
 function renderCurrentDay() {
     var currentDay = moment().format("dddd, MMMM Do, YYYY");
-    $("#currentDay").text(currentDay).
-        attr("data-day", moment().format("D"));
+    $("#currentDay").text(currentDay).attr("data-day", moment().format("D"));
 }
 
 // perform above function automatically every 6 hours to keep #currentDay accurate and clear task lists on new days
@@ -43,15 +42,19 @@ function auditTasks() {
         // if time block is in the past
         if (currentHour > dataHour) { 
             $(this).removeClass("present");
+            $(this).removeClass("future");
             $(this).addClass("past");
         }
         // if time block is current
         else if (currentHour == dataHour) {
+            $(this).removeClass("past");
             $(this).removeClass("future");
             $(this).addClass("present");
         }
         // if time block is in the future
         else  {
+            $(this).removeClass("past");
+            $(this).removeClass("present");
             $(this).addClass("future");
         }
     });
