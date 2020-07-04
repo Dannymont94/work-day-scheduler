@@ -1,10 +1,7 @@
 // load tasks from local storage or create empty objects
 function loadTasks() {
     $(".task").each(function(){
-        var dataHour = $(this).data("hour");
         var key = "hour-" + $(this).data("hour");
-        console.log(key , dataHour);
-        console.log(localStorage.getItem(key));
         $(this).find(".description").text(localStorage.getItem(key));
     });
 }
@@ -27,12 +24,10 @@ function auditCurrentDay() {
         $(".description").each(function(){
           $(this).text("");
         });
+        localStorage.clear();
         
-        // render new date
-        renderCurrentDay();
-
-        // save cleared list
-        saveAllTasks();
+        // reload page
+        document.location.reload(true);
     }
 }
 
@@ -85,10 +80,7 @@ function saveTask(task) {
     localStorage.setItem(key, description);
 }
 
-function saveAllTasks() {
-    console.log("saving all");
-}
-
+// on load
 renderCurrentDay();
 loadTasks();
 auditTasks();
